@@ -1,0 +1,102 @@
+#!/bin/bash
+
+check_output() {
+  cmp $1 my-$1 > /dev/null
+  if [ $? -eq 0 ]; then
+    printf "passed: "
+  else
+    printf "FAILED: : "
+  fi
+  printf "%s\n" "$2"
+}
+
+echo "Delete output (my-out*) files from previous tests?"
+echo "Press ctl-c to abort, any other key to delete the files & run tests"
+read x
+rm -f my-out? my-out??
+
+# translations:
+# both sets of the same size (-t should have no effect)
+./a1 abc xyz < input > my-out1
+check_output out1 "./a1 abc xyz < input > my-out1"
+
+./a1 ab bc < input > my-out2
+check_output out2 "./a1 ab bc < input > my-out2"
+
+./a1 abaca vwxyz < input > my-out3
+check_output out3 "./a1 abaca vwxyz < input > my-out3"
+
+./a1 -t abaca vwxyz < input > my-out4
+check_output out4 "./a1 -t abaca vwxyz < input > my-out4"
+
+# 2nd set is larger (-t should have no effect)
+./a1 aei vwxyz < input > my-out5
+check_output out5 "./a1 aei vwxyz < input > my-out5"
+
+./a1 -t aei vwxyz < input > my-out6
+check_output out6 "./a1 -t aei vwxyz < input > my-out6"
+
+# 1st set is larger
+./a1 abcdef xyz < input > my-out7
+check_output out7 "./a1 abcdef xyz < input > my-out7"
+
+./a1 abacaba vwxyz < input > my-out8
+check_output out8 "./a1 abacaba vwxyz < input > my-out8"
+
+./a1 -t abcdef xyz < input > my-out9
+check_output out9 "./a1 -t abcdef xyz < input > my-out9"
+
+./a1 -t abacaba vwxyz < input > my-out10
+check_output out10 "./a1 -t abacaba vwxyz < input > my-out10"
+
+# deletion:
+./a1 -d a < input > my-out11
+check_output out11 "./a1 -d a < input > my-out11"
+
+./a1 -d aeiou < input > my-out12
+check_output out12 "./a1 -d aeiou < input > my-out12"
+
+# with escape characters:
+./a1 '\n' x < input > my-out13
+check_output out13 "./a1 '\n' x < input > my-out13"
+
+./a1 'a\nc' xyz < input > my-out14
+check_output out14 "./a1 'a\nc' xyz < input > my-out14"
+
+./a1 'a\t\nc' wxyz < input > my-out15
+check_output out15 "./a1 'a\t\nc' wxyz < input > my-out15"
+
+./a1 '\\n' ab < input2 > my-out16
+check_output out16 "./a1 '\\\\n' ab < input2 > my-out16"
+
+./a1 ei 'x\n' < input2 > my-out17
+check_output out17 "./a1 ei 'x\n' < input2 > my-out17"
+
+./a1 '\tu' 'x\n' < input2 > my-out18
+check_output out18 "./a1 '\tu' 'x\n' < input2 > my-out18"
+
+./a1 -d 'a\n' < input > my-out19
+check_output out19 "./a1 -d 'a\n' < input > my-out19"
+
+./a1 -d '\\n' < input2 > my-out20
+check_output out20 "./a1 -d '\\\\n' < input2 > my-out20"
+
+./a1 -d '\n\t' < input2 > my-out21
+check_output out21 "./a1 -d '\n\t' < input2 > my-out21"
+
+# with ranges:
+./a1 -d a-c < input3 > my-out22
+check_output out22 "./a1 -d a-c < input3 > my-out22"
+
+./a1 a-z A-Z < input > my-out23
+check_output out23 "./a1 a-z A-Z < input > my-out23"
+
+./a1 A-Z a-z < input > my-out24
+check_output out24 "./a1 A-Z a-z < input > my-out24"
+
+./a1 a-e xyz < input > my-out25
+check_output out25 "./a1 a-e xyz < input > my-out25"
+
+./a1 -t a-e xyz < input > my-out26
+check_output out26 "./a1 -t a-e xyz < input > my-out26"
+
