@@ -177,7 +177,7 @@ void handle_escape(const char o[], char n[]) {
 		}
 		
 	}
-	n[i] = '\0';
+	n[x] = '\0';
 
 }
 
