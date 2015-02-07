@@ -7,9 +7,9 @@
 
 /*Author: Tyler Massicotte A00855150 Set D
 * Email: MassicotteTyler@gmail.com
-* This program is a simplified verision of the unix command, 
+* This program is a simplified version of the unix command, 
 * which is translate. The program translates characters from the 
-* first set the equilivant character in the second set. 
+* first set the equivalent character in the second set. 
 * Ex a1.exe abc xyz
 */
 void handle_escape(const char o[], char n[]); /*old, new */
@@ -101,7 +101,7 @@ int handle_flag(char *arg) {
 
 /*Takes in 2 sets of strings. Gets characters via stdin and compares
 * the character to the characters in set1, if there is a match it 
-* replaces the character with the character in the equilivant position
+* replaces the character with the character in the equivalent position
 * in set2
 */
 void translate(const char set1[], const char set2[]) {
@@ -150,7 +150,7 @@ void del(const char s[]) {
 /*Takes in two char arrays, o(ld) and n(ew). The array o is looped through
 * and looks for a '\' character. If found it checks the next character and
 * compares them to acceptable cases in the switch. If an acceptable case
-* is found it replaces the '\' character with the appropiate escape char
+* is found it replaces the '\' character with the appropriate escape char
 * e.g. 'a\t' becomes 'a    '
 */
 void handle_escape(const char o[], char n[]) {
@@ -227,6 +227,10 @@ void handle_range(char n[]) {
 	strncpy(n,temp, (size_t) z);
 }
 
+/*
+*
+*
+*/
 void expand(const char set1[], char set2[]) {
 	size_t i;
 	char temp;
